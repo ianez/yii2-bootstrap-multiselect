@@ -1,4 +1,3 @@
-Markdown
 # Yii2 Bootstrap Multiselect Widget
 
 A flexible and lightweight Yii2 widget wrapper for [David Stutz's bootstrap-multiselect](https://github.com/davidstutz/bootstrap-multiselect) plugin.
@@ -21,44 +20,58 @@ The preferred way to install this extension is through [Composer](https://getcom
 Run:
 
 ```bash
-composer require ianez/yii2-bootstrap-multiselect:"*"
-🔍 How Bootstrap 4 / 5 Auto-Detection Works
-The widget automatically detects whether your Yii2 application is running on Bootstrap 4 or Bootstrap 5:
+composer require ianez/yii2-bootstrap-multiselect:"^1.0"
+```
 
-bsVersion Global Parameter: The widget checks Yii::$app->params['bsVersion'] (e.g., '5.x', '4.x', 5, or 4).
+or add:
 
-Asset Bundle Fallback: If bsVersion is not explicitly set in params.php, the widget inspects loaded AssetBundles or defaults to Bootstrap 5 when yiisoft/yii2-bootstrap5 is installed.
+```json
+"ianez/yii2-bootstrap-multiselect": "^1.0"
+```
 
-Plugin Version Mapping:
-Default / Bootstrap 5: Loads bootstrap-multiselect v2.x assets (compatible with Bootstrap 5 JS/CSS and data-bs-* attributes).
+to the `require` section of your `composer.json` file.
 
-Bootstrap 4: Loads bootstrap-multiselect v1.x assets (compatible with Bootstrap 4 JS/CSS and data-* attributes).
+---
 
-Override: You can manually force the version by setting bsVersion directly on the widget:
+## 🔍 How Bootstrap 4 / 5 Auto-Detection Works
 
-PHP
-echo \ianez\multiselect\Multiselect::widget([
-    'bsVersion' => '5.x', // '4.x' or '5.x'
-    // ...
-]);
-⚙️ Default Behavior
+The widget automatically detects whether your Yii2 application is running on **Bootstrap 4** or **Bootstrap 5**:
+
+1. **`bsVersion` Global Parameter**: The widget checks `Yii::$app->params['bsVersion']` (e.g., `'5.x'`, `'4.x'`, `5`, or `4`).
+2. **Asset Bundle Fallback**: If `bsVersion` is not explicitly set in `params.php`, the widget inspects loaded AssetBundles or defaults to **Bootstrap 5** when `yiisoft/yii2-bootstrap5` is installed.
+
+### Plugin Version Mapping:
+- **Default / Bootstrap 5**: Loads **`bootstrap-multiselect` v2.x** assets (compatible with Bootstrap 5 JS/CSS and `data-bs-*` attributes).
+- **Bootstrap 4**: Loads **`bootstrap-multiselect` v1.x** assets (compatible with Bootstrap 4 JS/CSS and `data-*` attributes).
+
+> **Override**: You can manually force the version by setting `bsVersion` directly on the widget:
+> ```php
+> echo \ianez\multiselect\Multiselect::widget([
+>     'bsVersion' => '5.x', // '4.x' or '5.x'
+>     // ...
+> ]);
+> ```
+
+---
+
+## ⚙️ Default Behavior
+
 Out of the box, the widget:
+- **Default Plugin Version:** Downloads and registers **`bootstrap-multiselect` v2.x** by default (optimized for Bootstrap 5), unless Bootstrap 4 is explicitly detected or configured.
+- **Multiple Attribute:** Automatically appends `'multiple' => true` to the HTML `<select>` element (unless explicitly set to `false`).
+- **Asset Bundle Registration:** Automatically registers the required CSS and JS assets in the Yii2 View.
+- **jQuery Initialization:** Executes `$('#element-id').multiselect(...)` on document ready.
+- **Bootstrap Styling:** Applies standard Bootstrap form-control button styling for the multiselect dropdown menu.
 
-Default Plugin Version: Downloads and registers bootstrap-multiselect v2.x by default (optimized for Bootstrap 5), unless Bootstrap 4 is explicitly detected or configured.
+---
 
-Multiple Attribute: Automatically appends 'multiple' => true to the HTML <select> element (unless explicitly set to false).
+## 💻 Usage Examples
 
-Asset Bundle Registration: Automatically registers the required CSS and JS assets in the Yii2 View.
+> 💡 **Plugin Options & Documentation**: All properties passed into `clientOptions` correspond directly to the plugin's native options. You can find the complete list of available options, methods, and events on the official plugin website: [https://davidstutz.github.io/bootstrap-multiselect/](https://davidstutz.github.io/bootstrap-multiselect/).
 
-jQuery Initialization: Executes $('#element-id').multiselect(...) on document ready.
+### 1. With `ActiveForm` (Model Binding)
 
-Bootstrap Styling: Applies standard Bootstrap form-control button styling for the multiselect dropdown menu.
-
-💻 Usage Examples
-💡 Plugin Options & Documentation: All properties passed into clientOptions correspond directly to the plugin's native options. You can find the full list of available options, methods, and events on the Official Bootstrap Multiselect Documentation Website.
-
-1. With ActiveForm (Model Binding)
-PHP
+```php
 use ianez\multiselect\Multiselect;
 
 <?= $form->field($model, 'categories')->widget(Multiselect::class, [
@@ -77,8 +90,13 @@ use ianez\multiselect\Multiselect;
         'buttonWidth' => '100%',
     ],
 ]) ?>
-2. Without ActiveForm (Standalone Input)
-PHP
+```
+
+---
+
+### 2. Without `ActiveForm` (Standalone Input)
+
+```php
 use ianez\multiselect\Multiselect;
 
 <?= Multiselect::widget([
@@ -99,8 +117,15 @@ use ianez\multiselect\Multiselect;
         'buttonWidth' => '100%',
     ],
 ]) ?>
-3. Usage with optgroup (Grouped Options)
-PHP
+```
+
+---
+
+### 3. Usage with `optgroup` (Grouped Options)
+
+```php
+use ianez\multiselect\Multiselect;
+
 <?= Multiselect::widget([
     'name' => 'technologies',
     'data' => [
@@ -121,5 +146,10 @@ PHP
         'nonSelectedText' => 'Seleziona tecnologia...',
     ],
 ]) ?>
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
