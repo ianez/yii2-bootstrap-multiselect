@@ -9,6 +9,7 @@ A flexible and lightweight Yii2 widget wrapper for [David Stutz's bootstrap-mult
 - **Automatic Bootstrap Version Detection (BS4 vs BS5)**
 - Works seamlessly **with or without `ActiveForm`**
 - Sensible default options pre-configured
+- Bundled asset management for guaranteed stability
 - Support for `optgroup`, custom styling, filtering, and select-all actions
 
 ---
@@ -33,6 +34,19 @@ to the `require` section of your `composer.json` file.
 
 ---
 
+## 📌 Bundled Asset Versions & Upstream Release Dates
+
+To guarantee that upstream changes or updates to the JS plugin do not break your production environment unexpectedly, the JS and CSS assets are **bundled and version-pinned** within this extension.
+
+| Target Framework | Bundled Plugin Version | Upstream Release Date | Details |
+| :--- | :--- | :--- | :--- |
+| **Bootstrap 5** | `v2.0.0` | October 5, 2025 | Default target. Native `data-bs-*` attributes. |
+| **Bootstrap 4** | `v1.1.2` | September 2, 2022 | Fallback target. Native `data-*` attributes. |
+
+> **Upstream Maintenance Notice:** If new official releases or patches are published by David Stutz on GitHub, I'll try to keep updated but I can't guarantee
+
+---
+
 ## 🔍 How Bootstrap 4 / 5 Auto-Detection Works
 
 The widget automatically detects whether your Yii2 application is running on **Bootstrap 4** or **Bootstrap 5**:
@@ -41,8 +55,8 @@ The widget automatically detects whether your Yii2 application is running on **B
 2. **Asset Bundle Fallback**: If `bsVersion` is not explicitly set in `params.php`, the widget inspects loaded AssetBundles or defaults to **Bootstrap 5** when `yiisoft/yii2-bootstrap5` is installed.
 
 ### Plugin Version Mapping:
-- **Default / Bootstrap 5**: Loads **`bootstrap-multiselect` v2.x** assets (compatible with Bootstrap 5 JS/CSS and `data-bs-*` attributes).
-- **Bootstrap 4**: Loads **`bootstrap-multiselect` v1.x** assets (compatible with Bootstrap 4 JS/CSS and `data-*` attributes).
+- **Default / Bootstrap 5**: Loads **`bootstrap-multiselect` v2.0.0** assets.
+- **Bootstrap 4**: Loads **`bootstrap-multiselect` v1.1.2** assets.
 
 > **Override**: You can manually force the version by setting `bsVersion` directly on the widget:
 > ```php
@@ -57,7 +71,7 @@ The widget automatically detects whether your Yii2 application is running on **B
 ## ⚙️ Default Behavior
 
 Out of the box, the widget:
-- **Default Plugin Version:** Downloads and registers **`bootstrap-multiselect` v2.x** by default (optimized for Bootstrap 5), unless Bootstrap 4 is explicitly detected or configured.
+- **Default Plugin Version:** Loads **`bootstrap-multiselect` v2.0.0** by default (BS5 compatible), falling back to **v1.1.2** if Bootstrap 4 is detected.
 - **Multiple Attribute:** Automatically appends `'multiple' => true` to the HTML `<select>` element (unless explicitly set to `false`).
 - **Asset Bundle Registration:** Automatically registers the required CSS and JS assets in the Yii2 View.
 - **jQuery Initialization:** Executes `$('#element-id').multiselect(...)` on document ready.
@@ -67,7 +81,7 @@ Out of the box, the widget:
 
 ## 💻 Usage Examples
 
-> 💡 **Plugin Options & Documentation**: All properties passed into `clientOptions` correspond directly to the plugin's native options. You can find the complete list of available options, methods, and events on the official plugin website: [https://davidstutz.github.io/bootstrap-multiselect/](https://davidstutz.github.io/bootstrap-multiselect/).
+> 💡 **Plugin Options & Documentation**: All properties passed into `clientOptions` correspond directly to the plugin's native options. You can find the full list of available options, methods, and events on the [Official Bootstrap Multiselect Documentation Website](https://davidstutz.github.io/bootstrap-multiselect/).
 
 ### 1. With `ActiveForm` (Model Binding)
 
